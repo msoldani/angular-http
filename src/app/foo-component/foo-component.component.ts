@@ -9,34 +9,50 @@ import { Observable } from 'rxjs';
 })
 export class FooComponentComponent implements OnInit {
 
-  constructor(public http: HttpClient) {}
+  data: Object;
+  loading: boolean;
+  o: Observable<Object>;
+  constructor(public http: HttpClient) { }
 
-    data: Object;
-    loading: boolean;
-    o :Observable<Object>;
-    
-    makeRequest(): void {
-      console.log("here");
-      this.loading = true;
-      this.o = this.http.get('https://jsonplaceholder.typicode.com/posts/1');
-      this.o.subscribe(this.getData);
-    }
-    getData = (d : Object) =>
-    {
-      this.data = new Object(d);
-      this.loading = false;
-    }
+  makeRequest(): void {
+    console.log("here");
+    this.loading = true;
+    this.o = this.http.get('https://jsonplaceholder.typicode.com/posts/1');
+    this.o.subscribe(this.getData);
+  }
+  getData = (d: Object) => {
+    this.data = d;
+    this.loading = false;
+  }
 
-    //Nota bene, questo è un metodo alternativo al metodo makeRequest
-    makeCompactRequest(): void {
-      this.loading = true;
-      this.http
-        .get('https://jsonplaceholder.typicode.com/posts/1')
-        .subscribe(data => {
+  //Nota bene, questo è un metodo alternativo al metodo makeRequest
+  makeCompactRequest(): void {
+    this.loading = true;
+    this.http
+      .get('https://jsonplaceholder.typicode.com/posts/1')
+      .subscribe(data => {
         this.data = data;
         this.loading = false;
-        });
-       }
+      });
+  }
+
+  //L'operazione di post necessita un parametro in più.
+  //Viene creata una stringa (JSON.strigify) a partire da un oggetto Typescript
+  makeCompactPost(): void {
+    this.loading = true;
+    this.http
+      .post('https://jsonplaceholder.typicode.com/posts',
+        JSON.stringify({ 
+          body: 'bar',
+          title: 'foo',
+          userId: 1
+        })
+      )
+      .subscribe(data => {
+        this.data = data;
+        this.loading = false;
+      });
+  }
 
   ngOnInit() {
   }

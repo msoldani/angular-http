@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import { HttpClientModule } from '@angular/common/http'; //Importa
+import { HttpClientModule } from '@angular/common/http'; //Importa Il modulo http
 import { FooComponentComponent } from './foo-component/foo-component.component';
 
 @NgModule({
@@ -12,7 +12,7 @@ import { FooComponentComponent } from './foo-component/foo-component.component';
     FooComponentComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule
+    BrowserModule, HttpClientModule 
   ],
   providers: [],
   bootstrap: [AppComponent]
